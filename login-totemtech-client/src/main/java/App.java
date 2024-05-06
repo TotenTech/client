@@ -57,6 +57,7 @@ public class App {
                 if (!(memoria != null)) {
                     memoria = new Memoria(MemoriaController.getTotal(), "Gb", 1);
                     MemoriaDAO.insertMemoria(memoria, logged.getIdTotem());
+                    memoria = MemoriaController.getMemoria(logged.getIdTotem());
                 }
 
                 discos = DiscoController.getDiscos(logged.getIdTotem());
