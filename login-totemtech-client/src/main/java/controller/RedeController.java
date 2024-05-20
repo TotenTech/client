@@ -1,11 +1,26 @@
 package controller;
 
-import dao.RedeDAO;
-import entities.Rede;
+import dao.ComponentDAOImpl;
+import model.Componente;
+import model.Rede;
+import service.ComponentTypes;
+
+import java.util.List;
 
 public class RedeController {
 
-    public static void insertRede(Rede rede) {
-        RedeDAO.insertRede(rede);
+    static ComponentDAOImpl dao = new ComponentDAOImpl();
+
+    public static Rede getRede(Integer totem, ComponentTypes tipo) throws Exception {
+        try {
+            List<Componente> list = dao.getFromDatabase(totem, tipo);
+            if (list != null) {
+                return (Rede) list.get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception("Exceção no controller" + e.getMessage(), e);
+        }
     }
 }

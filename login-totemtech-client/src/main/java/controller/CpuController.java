@@ -1,30 +1,26 @@
 package controller;
 
-import entities.Cpu;
-import dao.CpuDAO;
-import entities.register.CpuRegistro;
+import dao.ComponentDAOImpl;
+import model.Componente;
+import model.Cpu;
+import service.ComponentTypes;
 import service.Convertions;
 import service.LoocaService;
 
+import java.util.List;
+
 public class CpuController {
 
+    static ComponentDAOImpl dao = new ComponentDAOImpl();
 
-    public static Cpu getCpu(Integer idTotem) throws Exception {
+    public static Cpu getCpu(Integer totem, ComponentTypes tipo) throws Exception {
         try {
-            Cpu cpu = CpuDAO.getCpu(idTotem);
-            if (cpu != null) {
-                return cpu;
+            List<Componente> list = dao.getFromDatabase(totem, tipo);
+            if (list != null) {
+                return (Cpu) list.get(0);
             } else {
                 return null;
             }
-        } catch (Exception e) {
-            throw new Exception("Exceção no controller" + e.getMessage(), e);
-        }
-    }
-
-    public static void insertCpu(Cpu cpu, Integer idTotem) throws Exception {
-        try {
-            CpuDAO.insertCpu(cpu, idTotem);
         } catch (Exception e) {
             throw new Exception("Exceção no controller" + e.getMessage(), e);
         }
@@ -42,8 +38,8 @@ public class CpuController {
         return LoocaService.getProcessos();
     }
 
-    public static void insertCpuRegistro(CpuRegistro cpuRegistro) {
-        CpuDAO.insertCpuRegistro(cpuRegistro);
-    }
+//    public static void insertCpuRegistro(CpuRegistro cpuRegistro) {
+//        CpuDAO.insertCpuRegistro(cpuRegistro);
+//    }
 
 }

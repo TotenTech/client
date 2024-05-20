@@ -1,17 +1,13 @@
 import com.github.britooo.looca.api.core.Looca;
 import controller.*;
-import dao.MemoriaDAO;
-import entities.*;
-import entities.register.CpuRegistro;
-import entities.register.DiscoRegistro;
-import entities.register.MemoriaRegistro;
+import model.*;
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
 import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
+import model.register.Registro;
 import service.Convertions;
 import shell.PowerShell;
-import shell.TerminalLinux;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -20,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static service.ComponentTypes.*;
+
 public class App {
 
     static Totem logged = null;
@@ -27,6 +25,7 @@ public class App {
     static Cpu cpu = null;
     static Memoria memoria = null;
     static List<Disco> discos = null;
+    static Rede rede = null;
     static int system;
     static Looca looca = new Looca();
 
@@ -37,39 +36,15 @@ public class App {
         inicio();
 
         if (logged != null) {
-            if (system == 1) {
-                PowerShell prompt = new PowerShell();
-//            prompt.restart();
-                prompt.executePowerShellCommand("cls");
-            } else {
-                TerminalLinux prompt = new TerminalLinux();
-                prompt.executeLinuxCommand("clear");
-            }
             try {
-                cpu = CpuController.getCpu(logged.getIdTotem());
-                if (!(cpu != null)) {
-                    cpu = new Cpu("Ghz", (CpuController.getFrequenciaProcessador()), 1);
-                    CpuController.insertCpu(cpu, logged.getIdTotem());
-                    cpu = CpuController.getCpu(logged.getIdTotem());
-                }
+                cpu = CpuController.getCpu(logged.getIdTotem(), CPU);
 
-                memoria = MemoriaController.getMemoria(logged.getIdTotem());
-                if (!(memoria != null)) {
-                    memoria = new Memoria(MemoriaController.getTotal(), "Gb", 1);
-                    MemoriaDAO.insertMemoria(memoria, logged.getIdTotem());
-                    memoria = MemoriaController.getMemoria(logged.getIdTotem());
-                }
+                memoria = MemoriaController.getMemoria(logged.getIdTotem(), MEMORIA);
 
-                discos = DiscoController.getDiscos(logged.getIdTotem());
-                if (!(discos != null)) {
-                    List<com.github.britooo.looca.api.group.discos.Disco> d = DiscoController.getDiscosLooca();
-                    for (int i = 0; i < d.size(); i++) {
-                        Disco di = new Disco(looca.getGrupoDeDiscos().getDiscos().get(i).getModelo(), Convertions.toDoubleTwoDecimals(Convertions.bytesParaGb(looca.getGrupoDeDiscos().getDiscos().get(i).getTamanho().doubleValue())), "Gb", logged.getIdTotem());
-                        DiscoController.insertDisco(di);
-                    }
-                    Thread.sleep(3000);
-                    discos = DiscoController.getDiscos(logged.getIdTotem());
-                }
+                discos = DiscoController.getDiscos(logged.getIdTotem(), DISCO);
+
+                rede = RedeController.getRede(logged.getIdTotem(), REDE);
+
                 System.out.println("Iniciando monitoramento...");
                 Thread.sleep(3000);
             } catch (Exception e) {
@@ -84,7 +59,7 @@ public class App {
 //            Executar a inovação, reiniciar pc
 //            if (system == 1) {
 //                PowerShell prompt = new PowerShell();
-////            prompt.restart();
+//            prompt.restart();
 //                prompt.executePowerShellCommand("restart-computer");
 //            } else {
 //                TerminalLinux prompt = new TerminalLinux();
@@ -100,9 +75,9 @@ public class App {
         int opcao;
         do {
             System.out.println("""
-                Bem vindo(a)!
-                Digite o número equivalente para escolher uma opção
-                1-Entrar || 2-Sair""");
+                    Bem vindo(a)!
+                    Digite o número equivalente para escolher uma opção
+                    1-Entrar || 2-Sair""");
 
             opcao = input.nextInt();
 
@@ -135,9 +110,9 @@ public class App {
             int opcao;
             do {
                 System.out.println("""
-                    Usuário não encontrado!
-                    Digite o número equivalente para escolher uma opção
-                    1-Tentar novamente || 2-Sair""");
+                        Usuário não encontrado!
+                        Digite o número equivalente para escolher uma opção
+                        1-Tentar novamente || 2-Sair""");
 
                 opcao = input.nextInt();
 
@@ -167,51 +142,53 @@ public class App {
         System.out.println();
         System.out.println("Executando testes de monitoramento - " + horarioFormatado);
 
-        MemoriaRegistro memoriaRegistro = new MemoriaRegistro();
-        memoriaRegistro.setTotem(logged.getIdTotem());
-        memoriaRegistro.setMemoria(memoria.getIdmemoria());
+        Registro memoriaRegistro = new Registro();
+        memoriaRegistro.setComponente(memoria.getIdComponente());
+        memoriaRegistro.setUnidadeMedida("Porcentagem");
 
-        List<DiscoRegistro> discosRegistro = new ArrayList<>();
-        for (int i = 0; i < discos.size(); i++) {
-            discosRegistro.add(new DiscoRegistro());
-            discosRegistro.get(i).setDisco(discos.get(i).getIddisco());
-            discosRegistro.get(i).setTotem(logged.getIdTotem());
-        }
-
-        memoriaRegistro.setValor(MemoriaController.getUsingPercentage(memoria.getTotal()));
+        memoriaRegistro.setValor((MemoriaController.getUsingPercentage(memoria.getTotal())).toString());
         System.out.println("Memoria RAM sendo utilizada em porcentagem: " + memoriaRegistro.getValor());
-        MemoriaController.insertMemoriaRegistro(memoriaRegistro);
+        RegistroController.insertRegistro(memoriaRegistro);
 
+        List<Registro> discosRegistro = new ArrayList<>();
+        for (int i = 0; i < discos.size(); i++) {
+            discosRegistro.add(new Registro());
+            discosRegistro.get(i).setComponente(discos.get(i).getIdComponente());
+            discosRegistro.get(i).setUnidadeMedida("Porcentagem");
+        }
         for (int i = 0; i < discosRegistro.size(); i++) {
-            discosRegistro.get(i).setValor(DiscoController.getUtilizadoPercentage(discos.get(i).getTotal(), i));
-            System.out.println("Disco " + i+1 + " espaço utilizado em porcentagem: " + discosRegistro.get(i).getValor());
-            DiscoController.insertDiscoRegistro(discosRegistro.get(i));
+            discosRegistro.get(i).setValor((DiscoController.getUtilizadoPercentage(discos.get(i).getTotal(), i)).toString());
+            System.out.println("Disco " + i + 1 + " espaço utilizado em porcentagem: " + discosRegistro.get(i).getValor());
+            RegistroController.insertRegistro(discosRegistro.get(i));
         }
 
-        CpuRegistro cpuRegistro = new CpuRegistro();
-        cpuRegistro.setCpu(cpu.getIdCpu());
+        Registro cpuRegistro = new Registro();
+        cpuRegistro.setComponente(cpu.getIdComponente());
+        cpuRegistro.setUnidadeMedida("Porcentagem");
+        cpuRegistro.setValor((CpuController.getUsingPercentage()).toString());
+        System.out.println("Cpu sendo utilizada em porcentagem: " + cpuRegistro.getValor());
+        RegistroController.insertRegistro(cpuRegistro);
 
-        cpuRegistro.setTotem(logged.getIdTotem());
-
-        cpuRegistro.setUtilizacao(CpuController.getUsingPercentage());
-        System.out.println("Cpu sendo utilizada em porcentagem: " + cpuRegistro.getUtilizacao());
-
-        cpuRegistro.setProcessos(CpuController.getProcessos());
-        System.out.println("Total de processos: " + cpuRegistro.getProcessos());
-
-        CpuController.insertCpuRegistro(cpuRegistro);
+        Registro cpuRegistro2 = new Registro();
+        cpuRegistro2.setComponente(cpu.getIdComponente());
+        cpuRegistro2.setUnidadeMedida("Int");
+        cpuRegistro2.setValor((CpuController.getProcessos()).toString());
+        System.out.println("Total de processos: " + cpuRegistro2.getValor());
+        RegistroController.insertRegistro(cpuRegistro2);
 
 
-        Rede rede = new Rede();
-        rede.setTotem(logged.getIdTotem());
+        Registro redeRegistro = new Registro();
+        redeRegistro.setComponente(rede.getIdComponente());
+        redeRegistro.setUnidadeMedida("Mb/s");
+
         SpeedTestSocket speedTestSocket = new SpeedTestSocket();
         speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
 
             @Override
             public void onCompletion(SpeedTestReport report) {
                 System.out.println("Velocidade da rede em mb/s: " + Convertions.toDoubleTwoDecimals(report.getTransferRateBit().divide(new BigDecimal(1000000)).doubleValue()));
-                rede.setDownload(Convertions.toDoubleTwoDecimals(report.getTransferRateBit().divide(new BigDecimal(1000000)).doubleValue()));
-                RedeController.insertRede(rede);
+                redeRegistro.setValor((Convertions.toDoubleTwoDecimals(report.getTransferRateBit().divide(new BigDecimal(1000000)).doubleValue())).toString());
+                RegistroController.insertRegistro(redeRegistro);
 
                 LocalTime fimTestes = LocalTime.now();
                 String horarioFormatado = fimTestes.format(formatter);
@@ -222,8 +199,8 @@ public class App {
             @Override
             public void onError(SpeedTestError speedTestError, String errorMessage) {
                 System.out.println("Totem sem conexão de rede");
-                rede.setDownload(null);
-                RedeController.insertRede(rede);
+                redeRegistro.setValor(null);
+                RegistroController.insertRegistro(redeRegistro);
 
                 LocalTime fimTestes = LocalTime.now();
                 String horarioFormatado = fimTestes.format(formatter);
@@ -238,4 +215,15 @@ public class App {
         });
         speedTestSocket.startDownload("https://link.testfile.org/15MB");
     }
+
+    public static void restart() {
+        try {
+            System.out.println("Problema crítico encontrado, reiniciando o totem em 5 segundos");
+            Thread.sleep(5000);
+            PowerShell prompt = new PowerShell();
+            prompt.executePowerShellCommand("restart-computer");
+        } catch (Exception e) {
+        }
+    }
 }
+

@@ -1,32 +1,29 @@
 package controller;
 
-import entities.Disco;
-import dao.DiscoDAO;
-import entities.register.DiscoRegistro;
+import dao.ComponentDAOImpl;
+import model.Componente;
+import model.Disco;
+import service.ComponentTypes;
 import service.Convertions;
 import service.LoocaService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiscoController {
 
+    static ComponentDAOImpl dao = new ComponentDAOImpl();
 
-    public static List<Disco> getDiscos(Integer idTotem) throws Exception {
+    public static List<Disco> getDiscos(Integer totem, ComponentTypes tipo) throws Exception {
         try {
-            List<Disco> discos = DiscoDAO.getDiscos(idTotem);
+            List<Componente> discos = dao.getFromDatabase(totem, tipo);
             if (discos != null) {
-                return discos;
+                List<Disco> dl = new ArrayList<>();
+                discos.forEach(it -> dl.add((Disco) it));
+                return dl;
             } else {
                 return null;
             }
-        } catch (Exception e) {
-            throw new Exception("Exceção no controller" + e.getMessage(), e);
-        }
-    }
-
-    public static void insertDisco(Disco disco) throws Exception {
-        try {
-            DiscoDAO.insertDisco(disco);
         } catch (Exception e) {
             throw new Exception("Exceção no controller" + e.getMessage(), e);
         }
@@ -40,7 +37,7 @@ public class DiscoController {
         return Convertions.toDoubleTwoDecimals(Convertions.bytesParaGb(LoocaService.getDiscoUtilizadoPercentage(id)) / total * 100);
     }
 
-    public static void insertDiscoRegistro(DiscoRegistro discoRegistro) {
-        DiscoDAO.insertDiscoRegistro(discoRegistro);
-    }
+//    public static void insertDiscoRegistro(DiscoRegistro discoRegistro) {
+//        DiscoDAO.insertDiscoRegistro(discoRegistro);
+//    }
 }

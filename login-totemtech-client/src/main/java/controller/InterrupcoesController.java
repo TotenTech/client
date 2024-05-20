@@ -1,6 +1,6 @@
 package controller;
 
-import entities.Interrupcoes;
+import model.Interrupcoes;
 import dao.InterrupcoesDAO;
 
 public class InterrupcoesController {

@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Interrupcoes;
+import model.Interrupcoes;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import repository.local.LocalDatabaseConnection;
