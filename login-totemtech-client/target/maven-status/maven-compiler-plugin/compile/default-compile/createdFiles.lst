@@ -16,6 +16,7 @@ controller\MemoriaController.class
 model\Rede.class
 model\Disco.class
 model\Memoria.class
+model\Especificacoes.class
 service\ComponentTypes.class
 service\Convertions.class
 controller\DiscoController.class
@@ -23,6 +24,7 @@ dao\ComponentDAOImpl$1.class
 shell\PowerShell.class
 dao\InterrupcoesDAO.class
 dao\ComponentDAOImpl.class
+service\Specifications.class
 controller\RegistroController.class
 model\Totem.class
 repository\local\LocalDatabaseConnection.class

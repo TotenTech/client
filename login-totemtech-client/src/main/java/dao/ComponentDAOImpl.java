@@ -25,26 +25,42 @@ public class ComponentDAOImpl implements IComponentDAO {
             db = dbRemote.getConexaoDoBanco();
             switch (tipo) {
                 case DISCO -> {
-                    List<Disco> listaDiscos = db.query("SELECT * FROM componentes WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Disco.class), totem, tipo.getTipo());
+                    List<Disco> listaDiscos = db.query("SELECT * FROM componente WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Disco.class), totem, tipo.getTipo());
                     if (!listaDiscos.isEmpty()) {
+                        for (Disco disco : listaDiscos) {
+                            List<Especificacoes> especificacoesList = db.query("SELECT * FROM especificacao WHERE componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), disco.getIdComponente());
+                            disco.setEspecificacoes(especificacoesList);
+                        }
                         l.addAll(listaDiscos);
                     }
                 }
                 case MEMORIA -> {
-                    List<Memoria> listaMemoria = db.query("SELECT * FROM componentes WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Memoria.class), totem, tipo.getTipo());
+                    List<Memoria> listaMemoria = db.query("SELECT * FROM componente WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Memoria.class), totem, tipo.getTipo());
                     if (!listaMemoria.isEmpty()) {
+                        for (Memoria memoria : listaMemoria) {
+                            List<Especificacoes> especificacoesList = db.query("SELECT * FROM especificacao WHERE componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), memoria.getIdComponente());
+                            memoria.setEspecificacoes(especificacoesList);
+                        }
                         l.add(listaMemoria.get(0));
                     }
                 }
                 case CPU -> {
-                    List<Cpu> listaCpu = db.query("SELECT * FROM componentes WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Cpu.class), totem, tipo.getTipo());
+                    List<Cpu> listaCpu = db.query("SELECT * FROM componente WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Cpu.class), totem, tipo.getTipo());
                     if (!listaCpu.isEmpty()) {
+                        for (Cpu cpu : listaCpu) {
+                            List<Especificacoes> especificacoesList = db.query("SELECT * FROM especificacao WHERE componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), cpu.getIdComponente());
+                            cpu.setEspecificacoes(especificacoesList);
+                        }
                         l.add(listaCpu.get(0));
                     }
                 }
                 case REDE -> {
-                    List<Rede> listaRede = db.query("SELECT * FROM componentes WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Rede.class), totem, tipo.getTipo());
+                    List<Rede> listaRede = db.query("SELECT * FROM componente WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Rede.class), totem, tipo.getTipo());
                     if (!listaRede.isEmpty()) {
+                        for (Rede rede : listaRede) {
+                            List<Especificacoes> especificacoesList = db.query("SELECT * FROM especificacao WHERE componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), rede.getIdComponente());
+                            rede.setEspecificacoes(especificacoesList);
+                        }
                         l.add(listaRede.get(0));
                     }
                 }

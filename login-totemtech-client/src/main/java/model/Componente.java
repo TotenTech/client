@@ -1,34 +1,43 @@
 package model;
 
+import java.util.List;
+
 public abstract class Componente {
 
     protected Integer idComponente;
-    private String tipo;
-    private String nome;
-    private Double total;
-    private Double minimo;
-    private Double maximo;
-    private Integer totem;
+    protected Integer tipo;
+    protected String nome;
+    protected Integer totem;
+    protected List<Especificacoes> especificacoes;
 
     public Componente() {}
 
-    public Componente(Integer idComponente, String tipo, String nome, Double total, Double minimo, Double maximo, Integer totem) {
+    public Componente(Integer idComponente, Integer totem, String nome, Integer tipo) {
         this.idComponente = idComponente;
         this.tipo = tipo;
         this.nome = nome;
-        this.total = total;
-        this.minimo = minimo;
-        this.maximo = maximo;
         this.totem = totem;
     }
 
-    public Componente(String tipo, String nome, Double total, Double minimo, Double maximo, Integer totem) {
+    public Componente(Integer tipo, String nome, Integer totem) {
         this.tipo = tipo;
         this.nome = nome;
-        this.total = total;
-        this.minimo = minimo;
-        this.maximo = maximo;
         this.totem = totem;
+    }
+
+    public Componente(Integer idComponente, Integer tipo, String nome, Integer totem, List<Especificacoes> especificacoes) {
+        this.idComponente = idComponente;
+        this.tipo = tipo;
+        this.nome = nome;
+        this.totem = totem;
+        this.especificacoes = especificacoes;
+    }
+
+    public Componente(Integer tipo, String nome, Integer totem, List<Especificacoes> especificacoes) {
+        this.tipo = tipo;
+        this.nome = nome;
+        this.totem = totem;
+        this.especificacoes = especificacoes;
     }
 
     public Integer getIdComponente() {
@@ -39,14 +48,6 @@ public abstract class Componente {
         this.idComponente = idComponente;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -55,35 +56,27 @@ public abstract class Componente {
         this.nome = nome;
     }
 
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public Double getMinimo() {
-        return minimo;
-    }
-
-    public void setMinimo(Double minimo) {
-        this.minimo = minimo;
-    }
-
-    public Double getMaximo() {
-        return maximo;
-    }
-
-    public void setMaximo(Double maximo) {
-        this.maximo = maximo;
-    }
-
     public Integer getTotem() {
         return totem;
     }
 
     public void setTotem(Integer totem) {
         this.totem = totem;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
+    public List<Especificacoes> getEspecificacoes() {
+        return especificacoes;
+    }
+
+    public void setEspecificacoes(List<Especificacoes> especificacoes) {
+        this.especificacoes = especificacoes;
     }
 }

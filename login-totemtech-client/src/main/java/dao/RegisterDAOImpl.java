@@ -19,12 +19,12 @@ public class RegisterDAOImpl implements IRegisterDAO {
     public void insert(Registro registro) throws Exception {
         try {
             dbr = dbRemote.getConexaoDoBanco();
-            dbr.update("INSERT INTO registros (valor, unidadeDeMedida, componente) VALUES (?, ?, ?)",
-                    registro.getValor(), registro.getUnidadeMedida(), registro.getComponente());
+            dbr.update("INSERT INTO registro (valor, componente) VALUES (?, ?)",
+                    registro.getValor(), registro.getComponente());
 
             dbl = dbLocal.getConexaoDoBanco();
-            dbl.update("INSERT INTO registros (valor, unidadeDeMedida, componente) VALUES (?, ?, ?)",
-                    registro.getValor(), registro.getUnidadeMedida(), registro.getComponente());
+            dbl.update("INSERT INTO registro (valor, componente) VALUES (?, ?)",
+                    registro.getValor(), registro.getComponente());
         } catch (Exception e) {
             throw new Exception("Falha ao inserir registro" + registro + " " + e.getMessage());
         }
@@ -34,7 +34,7 @@ public class RegisterDAOImpl implements IRegisterDAO {
     public List<Registro> selectAll(Integer componente) throws Exception {
         try {
             dbr = dbRemote.getConexaoDoBanco();
-            List<Registro> list = dbr.query("SELECT * FROM registros", new BeanPropertyRowMapper<>(Registro.class));
+            List<Registro> list = dbr.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
             if (!list.isEmpty()) {
                 return list;
             } else {
@@ -49,7 +49,7 @@ public class RegisterDAOImpl implements IRegisterDAO {
     public List<Registro> selectLast(Integer componente) throws Exception {
         try {
             dbr = dbRemote.getConexaoDoBanco();
-            List<Registro> list = dbr.query("SELECT * FROM registros WHERE componente = ?", new BeanPropertyRowMapper<>(Registro.class), componente);
+            List<Registro> list = dbr.query("SELECT * FROM registro WHERE componente = ?", new BeanPropertyRowMapper<>(Registro.class), componente);
             if (!list.isEmpty()) {
                 return list;
             } else {

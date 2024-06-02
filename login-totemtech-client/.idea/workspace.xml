@@ -5,67 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17c6d107-b2bc-46b5-be94-6d862e5c9866" name="Changes" comment="Exclui gitignores">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RegistroController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/ComponentDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/IComponentDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/IRegisterDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/RegisterDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Componente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/register/Registro.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/ComponentTypes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Especificacoes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/Specifications.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/CpuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CpuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DiscoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/DiscoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/InterrupcoesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/InterrupcoesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MemoriaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MemoriaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RedeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RedeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TotemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TotemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CpuDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DiscoDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/InterrupcoesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/InterrupcoesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/MemoriaDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/RedeDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/TotemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/TotemDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Cpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Cpu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Disco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Disco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Interrupcoes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Interrupcoes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Memoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Memoria.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Rede.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Rede.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Totem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Totem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/register/CpuRegistro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/register/DiscoRegistro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/register/MemoriaRegistro.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/ComponentDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/ComponentDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/RegisterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/RegisterDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Componente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Componente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Cpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Cpu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Disco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Disco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Memoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Memoria.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Rede.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Rede.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/register/Registro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/register/Registro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/ComponentTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ComponentTypes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/CpuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/CpuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/DiscoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/DiscoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/InterrupcoesController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/InterrupcoesController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/MemoriaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/MemoriaController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/RedeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/RedeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/TotemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/TotemController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/CpuDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/DiscoDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/InterrupcoesDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/InterrupcoesDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/MemoriaDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/RedeDAO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/TotemDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/TotemDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Cpu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Disco.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Interrupcoes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Memoria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Rede.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/Totem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/register/CpuRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/register/DiscoRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entities/register/MemoriaRegistro.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT-jar-with-dependencies.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT-jar-with-dependencies.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Componente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Componente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Cpu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Cpu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Disco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Disco.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Memoria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Memoria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Rede.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Rede.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/ComponentTypes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/ComponentTypes.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,8 +37,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -93,22 +54,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.App.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Test.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.login-totemtech [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.login-totemtech [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/gabri/intellijProjects/sptech-segundo-semestre/TotemTech/client/login-totemtech-client&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Maven.login-totemtech [clean].executor": "Run",
+    "Maven.login-totemtech [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/gabri/intellijProjects/sptech-segundo-semestre/TotemTech/client/login-totemtech-client",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="login-totemtech-client" />

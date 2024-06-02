@@ -1,18 +1,18 @@
 package service;
 
 public enum ComponentTypes {
-    DISCO("Disco"),
-    REDE("Rede"),
-    MEMORIA("Memoria"),
-    CPU("Cpu");
+    DISCO(3),
+    REDE(4),
+    MEMORIA(2),
+    CPU(1);
 
-    private final String tipo;
+    private final Integer tipo;
 
-    ComponentTypes(String tipo) {
+    ComponentTypes(Integer tipo) {
         this.tipo = tipo;
     }
 
-    public String getTipo() {
+    public Integer getTipo() {
         return tipo;
     }
 }

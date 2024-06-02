@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static service.ComponentTypes.*;
+import static service.Specifications.TOTAL;
 
 public class App {
 
@@ -144,7 +145,6 @@ public class App {
 
         Registro memoriaRegistro = new Registro();
         memoriaRegistro.setComponente(memoria.getIdComponente());
-        memoriaRegistro.setUnidadeMedida("Porcentagem");
 
         memoriaRegistro.setValor((MemoriaController.getUsingPercentage(memoria.getTotal())).toString());
         System.out.println("Memoria RAM sendo utilizada em porcentagem: " + memoriaRegistro.getValor());
@@ -154,7 +154,6 @@ public class App {
         for (int i = 0; i < discos.size(); i++) {
             discosRegistro.add(new Registro());
             discosRegistro.get(i).setComponente(discos.get(i).getIdComponente());
-            discosRegistro.get(i).setUnidadeMedida("Porcentagem");
         }
         for (int i = 0; i < discosRegistro.size(); i++) {
             discosRegistro.get(i).setValor((DiscoController.getUtilizadoPercentage(discos.get(i).getTotal(), i)).toString());
@@ -162,24 +161,21 @@ public class App {
             RegistroController.insertRegistro(discosRegistro.get(i));
         }
 
-        Registro cpuRegistro = new Registro();
-        cpuRegistro.setComponente(cpu.getIdComponente());
-        cpuRegistro.setUnidadeMedida("Porcentagem");
-        cpuRegistro.setValor((CpuController.getUsingPercentage()).toString());
-        System.out.println("Cpu sendo utilizada em porcentagem: " + cpuRegistro.getValor());
-        RegistroController.insertRegistro(cpuRegistro);
-
         Registro cpuRegistro2 = new Registro();
         cpuRegistro2.setComponente(cpu.getIdComponente());
-        cpuRegistro2.setUnidadeMedida("Int");
         cpuRegistro2.setValor((CpuController.getProcessos()).toString());
         System.out.println("Total de processos: " + cpuRegistro2.getValor());
         RegistroController.insertRegistro(cpuRegistro2);
 
+        Registro cpuRegistro = new Registro();
+        cpuRegistro.setComponente(cpu.getIdComponente());
+        cpuRegistro.setValor((CpuController.getUsingPercentage()).toString());
+        System.out.println("Cpu sendo utilizada em porcentagem: " + cpuRegistro.getValor());
+        RegistroController.insertRegistro(cpuRegistro);
+
 
         Registro redeRegistro = new Registro();
         redeRegistro.setComponente(rede.getIdComponente());
-        redeRegistro.setUnidadeMedida("Mb/s");
 
         SpeedTestSocket speedTestSocket = new SpeedTestSocket();
         speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {

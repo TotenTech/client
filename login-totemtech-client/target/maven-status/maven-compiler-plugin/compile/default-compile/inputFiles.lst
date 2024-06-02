@@ -18,6 +18,7 @@ C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-t
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\shell\PowerShell.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\dao\InterrupcoesDAO.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\model\Cpu.java
+C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\model\Especificacoes.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\model\Memoria.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\service\Convertions.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\controller\CpuController.java
@@ -26,5 +27,6 @@ C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-t
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\repository\remote\RemoteDatabaseConnection.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\model\Componente.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\model\Rede.java
+C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\service\Specifications.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\controller\InterrupcoesController.java
 C:\Users\gabri\intellijProjects\sptech-segundo-semestre\TotemTech\client\login-totemtech-client\src\main\java\controller\RedeController.java

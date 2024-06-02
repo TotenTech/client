@@ -6,23 +6,20 @@ public class Registro {
 
     private Integer idRegistro;
     private String valor;
-    private String unidadeMedida;
     private Timestamp horario;
     private Integer componente;
 
     public Registro() {}
 
-    public Registro(Integer idRegistro, String valor, String unidadeMedida, Timestamp horario, Integer componente) {
+    public Registro(Integer idRegistro, String valor, Timestamp horario, Integer componente) {
         this.idRegistro = idRegistro;
         this.valor = valor;
-        this.unidadeMedida = unidadeMedida;
         this.horario = horario;
         this.componente = componente;
     }
 
-    public Registro(String valor, String unidadeMedida, Timestamp horario, Integer componente) {
+    public Registro(String valor, Timestamp horario, Integer componente) {
         this.valor = valor;
-        this.unidadeMedida = unidadeMedida;
         this.horario = horario;
         this.componente = componente;
     }
@@ -41,14 +38,6 @@ public class Registro {
 
     public void setValor(String valor) {
         this.valor = valor;
-    }
-
-    public String getUnidadeMedida() {
-        return unidadeMedida;
-    }
-
-    public void setUnidadeMedida(String unidadeMedida) {
-        this.unidadeMedida = unidadeMedida;
     }
 
     public Timestamp getHorario() {
