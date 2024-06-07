@@ -21,12 +21,16 @@ public class RegisterDAOImpl implements IRegisterDAO {
             dbr = dbRemote.getConexaoDoBanco();
             dbr.update("INSERT INTO registro (valor, componente) VALUES (?, ?)",
                     registro.getValor(), registro.getComponente());
-
+        } catch (Exception e) {
+            throw new Exception("Falha ao inserir registro" + registro + " " + e.getMessage());
+        }
+        try {
             dbl = dbLocal.getConexaoDoBanco();
             dbl.update("INSERT INTO registro (valor, componente) VALUES (?, ?)",
                     registro.getValor(), registro.getComponente());
         } catch (Exception e) {
-            throw new Exception("Falha ao inserir registro" + registro + " " + e.getMessage());
+            System.out.println("No local não foi");
+//            throw new Exception("Falha ao inserir registro" + registro + " " + e.getMessage());
         }
     }
 

@@ -64,6 +64,16 @@ public class ComponentDAOImpl implements IComponentDAO {
                         l.add(listaRede.get(0));
                     }
                 }
+                case TOTAL -> {
+                        List<Disco> listaDisco = db.query("SELECT * FROM componente WHERE totem = ? AND tipo = ?", new BeanPropertyRowMapper<>(Disco.class), totem, tipo.getTipo());
+                        if (!listaDisco.isEmpty()) {
+                            for (Disco disco : listaDisco) {
+                                List<Especificacoes> especificacoesList = db.query("SELECT * FROM especificacao WHERE componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), disco.getIdComponente());
+                                disco.setEspecificacoes(especificacoesList);
+                            }
+                            l.add(listaDisco.get(0));
+                        }
+                }
                 default -> {
                     return null;
                 }
@@ -73,9 +83,41 @@ public class ComponentDAOImpl implements IComponentDAO {
         }
 
         if (!l.isEmpty()) {
+            insertOnLocal(l);
             return l;
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public void insertOnLocal(List<Componente> components) {
+        try {
+            List<Componente> listaComponents = new ArrayList<>();
+            db = dbLocal.getConexaoDoBanco();
+            components.forEach(it -> {
+                List<Componente> l = db.query("SELECT * FROM componente WHERE idcomponente = ?", new BeanPropertyRowMapper<>(Componente.class), it.getIdComponente());
+                if (l.isEmpty()) {
+                    listaComponents.add(it);
+                }
+            });
+            List<Especificacoes> listaEspecifications = new ArrayList<>();
+            listaComponents.forEach(it -> {
+                db.update("INSERT INTO componente VALUES (?, ?, ?, ?)", it.getIdComponente(), it.getTotem(), it.getNome(), it.getTipo());
+                if (it.getEspecificacoes() != null) {
+                    it.getEspecificacoes().forEach(e -> {
+                        List<Especificacoes> es = db.query("SELECT * FROM especificacao WHERE idespecificacao = ? AND componente = ?", new BeanPropertyRowMapper<>(Especificacoes.class), e.getIdespecificacao(), e.getComponente());
+                        if (es.isEmpty()) {
+                            listaEspecifications.add(e);
+                        }
+                    });
+                }
+            });
+            listaEspecifications.forEach(it -> {
+                db.update("INSERT INTO especificacao VALUES (?, ?, ?, ?, ?, ?)", it.getIdespecificacao(), it.getNome(), it.getValor(), it.getUnidadeMedida(), it.getComponente(), it.getTipo());
+            });
+        } catch(Exception e) {
+            System.out.println("Falha ao atualizar banco Componentes " + e.getMessage());
         }
     }
 }

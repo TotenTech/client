@@ -8,7 +8,6 @@ model\Interrupcoes.class
 service\LoocaService.class
 shell\TerminalLinux.class
 dao\TotemDAO.class
-repository\UserDataBase.class
 dao\RegisterDAOImpl.class
 model\Cpu.class
 App$1.class

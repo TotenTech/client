@@ -1,13 +1,16 @@
 import com.github.britooo.looca.api.core.Looca;
 import controller.*;
-import model.*;
+import dao.InterrupcoesDAO;
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
 import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
+import model.*;
 import model.register.Registro;
+import service.ComponentTypes;
 import service.Convertions;
 import shell.PowerShell;
+import shell.TerminalLinux;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -17,7 +20,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static service.ComponentTypes.*;
-import static service.Specifications.TOTAL;
 
 public class App {
 
@@ -27,11 +29,13 @@ public class App {
     static Memoria memoria = null;
     static List<Disco> discos = null;
     static Rede rede = null;
+    static Disco totalDiscos = null;
     static int system;
     static Looca looca = new Looca();
+    static List<Boolean> memoriaError = new ArrayList<>();
+    static List<Boolean> cpuError = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-
 
         verificarSo();
         inicio();
@@ -46,6 +50,8 @@ public class App {
 
                 rede = RedeController.getRede(logged.getIdTotem(), REDE);
 
+                totalDiscos = DiscoController.getDiscos(logged.getIdTotem(), ComponentTypes.TOTAL).get(0);
+
                 System.out.println("Iniciando monitoramento...");
                 Thread.sleep(3000);
             } catch (Exception e) {
@@ -56,17 +62,6 @@ public class App {
                 inserts();
                 Thread.sleep(120000);
             }
-
-//            Executar a inovação, reiniciar pc
-//            if (system == 1) {
-//                PowerShell prompt = new PowerShell();
-//            prompt.restart();
-//                prompt.executePowerShellCommand("restart-computer");
-//            } else {
-//                TerminalLinux prompt = new TerminalLinux();
-//                prompt.executeLinuxCommand("shutdown -r now");
-//            }
-
         }
     }
 
@@ -156,10 +151,15 @@ public class App {
             discosRegistro.get(i).setComponente(discos.get(i).getIdComponente());
         }
         for (int i = 0; i < discosRegistro.size(); i++) {
-            discosRegistro.get(i).setValor((DiscoController.getUtilizadoPercentage(discos.get(i).getTotal(), i)).toString());
-            System.out.println("Disco " + i + 1 + " espaço utilizado em porcentagem: " + discosRegistro.get(i).getValor());
+            discosRegistro.get(i).setValor((DiscoController.getUtilizadoPercentage(discos.get(i).getTotal(), i, discosRegistro.size())).toString());
             RegistroController.insertRegistro(discosRegistro.get(i));
         }
+
+        Registro totalDiscosRegistro = new Registro();
+        totalDiscosRegistro.setComponente(totalDiscos.getIdComponente());
+        totalDiscosRegistro.setValor(DiscoController.getTotalDiscosPercentage(totalDiscos.getTotal()).toString());
+        System.out.println("Armazenamento utilizado em porcentagem: " + totalDiscosRegistro.getValor());
+        RegistroController.insertRegistro(totalDiscosRegistro);
 
         Registro cpuRegistro2 = new Registro();
         cpuRegistro2.setComponente(cpu.getIdComponente());
@@ -188,8 +188,7 @@ public class App {
 
                 LocalTime fimTestes = LocalTime.now();
                 String horarioFormatado = fimTestes.format(formatter);
-                System.out.println("Monitoramento finalizado em " + horarioFormatado + " os componentes passarão por testes de monitoramento novamente em aproximadamente 2 minutos");
-                System.out.println();
+                verifyStatus(Double.parseDouble(memoriaRegistro.getValor()), Double.parseDouble(cpuRegistro.getValor()), Double.parseDouble(totalDiscosRegistro.getValor()), Double.parseDouble(redeRegistro.getValor()), horarioFormatado);
             }
 
             @Override
@@ -200,8 +199,7 @@ public class App {
 
                 LocalTime fimTestes = LocalTime.now();
                 String horarioFormatado = fimTestes.format(formatter);
-                System.out.println("Monitoramento finalizado em " + horarioFormatado + " os componentes passarão por testes de monitoramento novamente em aproximadamente 2 minutos");
-                System.out.println();
+                verifyStatus(Double.parseDouble(memoriaRegistro.getValor()), Double.parseDouble(cpuRegistro.getValor()), Double.parseDouble(totalDiscosRegistro.getValor()), null, horarioFormatado);
             }
 
             @Override
@@ -212,13 +210,169 @@ public class App {
         speedTestSocket.startDownload("https://link.testfile.org/15MB");
     }
 
+    public static void verifyStatus(Double memoria, Double cpu, Double disco, Double rede, String horario) {
+        String statusMemoria = "";
+        String statusDisco = "";
+        String statusCpu = "";
+        String statusRede = "";
+        Boolean restartTotem = false;
+        String motivo = "";
+
+        if (memoria < 85.0) {
+            memoriaError.add(false);
+            statusMemoria = "Ok";
+        } else if (memoria >= 85.0 && memoria <= 89.0) {
+            memoriaError.add(false);
+            statusMemoria = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema encontrado: Entre 85% e 89% da memória total sendo utilizada.
+                    Nível aceitável, mas exige monitoramento para evitar sobrecarga da memória. 
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        } else if (memoria > 89.0) {
+            if (memoriaError.isEmpty()) {
+                memoriaError.add(true);
+                statusMemoria = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Mais de 89% da memória total sendo utilizada.
+                    Sobrecarga da memória pode levar a lentidão, travamentos, falhas no sistema e até mesmo perda de dados. 
+                    Caso o problema persista o totem será reiniciado!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            } else if (!memoriaError.get(memoriaError.size() - 1)) {
+                memoriaError.add(true);
+                statusMemoria = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Mais de 89% da memória total sendo utilizada.
+                    Sobrecarga da memória pode levar a lentidão, travamentos, falhas no sistema e até mesmo perda de dados. 
+                    Caso o problema persista o totem será reiniciado!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            } else if (memoriaError.get(memoriaError.size() - 1)) {
+                motivo = "Memória RAM";
+                restartTotem = true;
+                statusMemoria = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Mais de 89% da memória total sendo utilizada.
+                    Devido a persistência do problema o totem será reiniciado em 5 segundos!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            }
+        }
+
+        if (cpu < 80.0) {
+            cpuError.add(false);
+            statusCpu = "Ok";
+        } else if (cpu >= 80.0 && cpu <= 90.0) {
+            cpuError.add(false);
+            statusCpu = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema encontrado: Entre 80% e 90% de utilização da CPU.
+                    É sinal de que a CPU está sendo utilizada com eficiência, mas pode haver lentidão em momentos de pico.
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        } else if (cpu > 90.0) {
+            if (cpuError.isEmpty()) {
+                cpuError.add(true);
+                statusCpu = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Acima de 90% de utilização da CPU.
+                    Indica sobrecarga da CPU, resultando em lentidão, travamentos e instabilidades do sistema.
+                    Caso o problema persista o totem será reiniciado!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            } else if (!cpuError.get(cpuError.size() - 1)) {
+                cpuError.add(true);
+                statusCpu = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Acima de 90% de utilização da CPU.
+                    Indica sobrecarga da CPU, resultando em lentidão, travamentos e instabilidades do sistema.
+                    Caso o problema persista o totem será reiniciado!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            } else if (cpuError.get(cpuError.size() - 1)) {
+                motivo = "CPU";
+                restartTotem = true;
+                statusCpu = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Acima de 90% de utilização da CPU.
+                    Devido a persistência do problema o totem será reiniciado em 5 segundos!!!
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+            }
+        }
+
+        if (disco < 80.0) {
+            statusDisco = "Ok";
+        } else if (disco >= 80.0 && disco <= 90.0) {
+            statusDisco = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema encontrado: Entre 80% e 90% do armazenamento do totem utilizado.
+                    Nível de alerta que exige monitoramento para evitar que a utilização do disco exceda a capacidade.
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        } else if (disco > 90.0) {
+            statusDisco = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Acima de 90% do armazenamento do totem utilizado.
+                    Utilização excessiva do disco pode levar a lentidão, travamentos e falhas no sistema.
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        }
+
+        if (rede > 10.0) {
+            statusRede = "Ok";
+        } else if (rede >= 6.0 && rede <= 10.0) {
+            statusRede = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema encontrado: Velocidade da rede entre 10MB/s e 6MB/s.
+                    O sistema funcionará sem problemas, porém, pode apresentar problemas em horário de pico.
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        } else if (rede < 5.0) {
+            statusRede = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema crítico encontrado: Velocidade da rede abaixo de 5MB/s.
+                    Indica lentidão, travamento e instabilidade do sistema
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        } else {
+            statusRede = """
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0
+                    Problema encontrado: Totem sem conexão com a rede, os dados serão salvos localmente evitando assim a perda dos mesmos.
+                    \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0 \u26A0""";
+        }
+
+        System.out.println("Status do totem:");
+        System.out.println("Memória");
+        System.out.println(statusMemoria);
+        System.out.println("CPU");
+        System.out.println(statusCpu);
+        System.out.println("Discos");
+        System.out.println(statusDisco);
+        System.out.println("Rede");
+        System.out.println(statusRede);
+            if (restartTotem) {
+                InterrupcoesDAO.insertInterrupcao(motivo, logged.getIdTotem());
+                new Thread(() -> {
+                    try {
+                        for (int i = 5; i > 0; i--) {
+                            System.out.println("O totem será reiniciado em: " + i + " segundos");
+                            Thread.sleep(1000);
+                            if (i == 1) {
+                                restart();
+                            }
+                        }
+                    } catch (Exception e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }).start();
+
+            } else {
+                System.out.println("Monitoramento finalizado em " + horario + " os componentes passarão por testes de monitoramento novamente em aproximadamente 2 minutos");
+                System.out.println();
+            }
+    }
+
     public static void restart() {
         try {
-            System.out.println("Problema crítico encontrado, reiniciando o totem em 5 segundos");
-            Thread.sleep(5000);
-            PowerShell prompt = new PowerShell();
-            prompt.executePowerShellCommand("restart-computer");
+            if (system == 1) {
+                PowerShell prompt = new PowerShell();
+                prompt.executePowerShellCommand("restart-computer");
+            } else {
+                TerminalLinux prompt = new TerminalLinux();
+                prompt.executeLinuxCommand("shutdown -r now");
+            }
         } catch (Exception e) {
+            System.out.println("Falha, o totem não pôde ser reiniciado!");
         }
     }
 }

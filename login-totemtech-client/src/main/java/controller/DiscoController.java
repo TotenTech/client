@@ -1,5 +1,6 @@
 package controller;
 
+import com.github.britooo.looca.api.core.Looca;
 import dao.ComponentDAOImpl;
 import model.Componente;
 import model.Disco;
@@ -33,11 +34,13 @@ public class DiscoController {
         return LoocaService.getDiscos();
     }
 
-    public static Double getUtilizadoPercentage(Double total, Integer id) {
-        return Convertions.toDoubleTwoDecimals(Convertions.bytesParaGb(LoocaService.getDiscoUtilizadoPercentage(id)) / total * 100);
+    public static Double getUtilizadoPercentage(Double total, Integer id, Integer qttDiscos) {
+        Double utilization = LoocaService.getVolumesUtilizado() / qttDiscos;
+        return Convertions.toDoubleTwoDecimals((Convertions.bytesParaGb(utilization) / total * 100));
     }
 
-//    public static void insertDiscoRegistro(DiscoRegistro discoRegistro) {
-//        DiscoDAO.insertDiscoRegistro(discoRegistro);
-//    }
+    public static Double getTotalDiscosPercentage(Double total) {
+        Double utilization = LoocaService.getVolumesUtilizado();
+        return Convertions.toDoubleTwoDecimals(Convertions.bytesParaGb(utilization) / total * 100);
+    }
 }

@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public abstract class Componente {
+public class Componente {
 
     protected Integer idComponente;
     protected Integer tipo;

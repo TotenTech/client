@@ -4,7 +4,8 @@ public enum ComponentTypes {
     DISCO(3),
     REDE(4),
     MEMORIA(2),
-    CPU(1);
+    CPU(1),
+    TOTAL(5);
 
     private final Integer tipo;
 

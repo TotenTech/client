@@ -18,12 +18,4 @@ public class PowerShell {
         process.destroy();
         return output.toString();
     }
-
-    public void restart() {
-        try {
-            executePowerShellCommand("Restart-Computer");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

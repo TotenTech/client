@@ -36,4 +36,9 @@ public class LoocaService {
     public static Double getDiscoUtilizadoPercentage(Integer id) {
         return looca.getGrupoDeDiscos().getDiscos().get(id).getBytesDeEscritas().doubleValue() + looca.getGrupoDeDiscos().getDiscos().get(id).getBytesDeLeitura();
     }
+
+    public static Double getVolumesUtilizado() {
+        return looca.getGrupoDeDiscos().getVolumes().stream().mapToDouble(it -> it.getTotal() - it.getDisponivel()).sum();
+    }
+
 }

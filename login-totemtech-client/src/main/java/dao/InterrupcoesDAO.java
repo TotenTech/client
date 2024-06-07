@@ -12,12 +12,13 @@ public class InterrupcoesDAO {
 
     static LocalDatabaseConnection dbLocal = new LocalDatabaseConnection();
     static RemoteDatabaseConnection dbRemote = new RemoteDatabaseConnection();
-    static JdbcTemplate db;
+    static JdbcTemplate dbr;
+    static JdbcTemplate dbl;
 
     public static Interrupcoes getInterrupcoes(Integer idTotem) throws Exception {
         try {
-            db = dbLocal.getConexaoDoBanco();
-            List<Interrupcoes> listaInterrupcoes = db.query("SELECT * FROM interrupcoes WHERE totem = ?", new BeanPropertyRowMapper<>(Interrupcoes.class), idTotem);
+            dbr = dbRemote.getConexaoDoBanco();
+            List<Interrupcoes> listaInterrupcoes = dbr.query("SELECT * FROM interrupcoes WHERE totem = ?", new BeanPropertyRowMapper<>(Interrupcoes.class), idTotem);
                 if (!listaInterrupcoes.isEmpty() && listaInterrupcoes != null) {
                     return listaInterrupcoes.get(0);
                 }
@@ -25,5 +26,21 @@ public class InterrupcoesDAO {
             throw new Exception("Exceção no dao" + e.getMessage(), e);
         }
         return null;
+    }
+
+    public static void insertInterrupcao(String motivo, Integer totem) {
+        try {
+            dbr = dbRemote.getConexaoDoBanco();
+            dbr.update("INSERT INTO interrupcoes (motivo, totem) VALUES (?, ?)", motivo, totem);
+        } catch (Exception e) {
+            System.out.println("Falha ao registrar interrupção no banco remoto");
+        }
+
+        try {
+            dbl = dbLocal.getConexaoDoBanco();
+            dbl.update("INSERT INTO interrupcoes (motivo, totem) VALUES (?, ?)", motivo, totem);
+        } catch (Exception e) {
+            System.out.println("Falha ao registrar interrupção no banco local");
+        }
     }
 }
