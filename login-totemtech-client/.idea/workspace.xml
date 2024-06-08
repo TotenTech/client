@@ -4,38 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17c6d107-b2bc-46b5-be94-6d862e5c9866" name="Changes" comment="Exclui gitignores">
+    <list default="true" id="17c6d107-b2bc-46b5-be94-6d862e5c9866" name="Changes" comment="Apliquei inovação com métricas para chama-la e alterei lógica dos discos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DiscoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/DiscoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/ComponentDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/ComponentDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/IComponentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/IComponentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/InterrupcoesDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/InterrupcoesDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/RegisterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/RegisterDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/TotemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/TotemDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Componente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Componente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/UserDataBase.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/ComponentTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ComponentTypes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/LoocaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/LoocaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/shell/PowerShell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/shell/PowerShell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/App$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/DiscoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/DiscoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/ComponentDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/IComponentDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/IComponentDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/InterrupcoesDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/InterrupcoesDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/RegisterDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/RegisterDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dao/TotemDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/TotemDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/Componente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Componente.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/repository/UserDataBase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/ComponentTypes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/ComponentTypes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/LoocaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/LoocaService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/shell/PowerShell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/shell/PowerShell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT-jar-with-dependencies.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT-jar-with-dependencies.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/login-totemtech-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +83,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715030731194</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Apliquei inovação com métricas para chama-la e alterei lógica dos discos">
+      <option name="closed" value="true" />
+      <created>1717802038980</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717802038980</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -127,6 +107,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Exclui gitignores" />
-    <option name="LAST_COMMIT_MESSAGE" value="Exclui gitignores" />
+    <MESSAGE value="Apliquei inovação com métricas para chama-la e alterei lógica dos discos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Apliquei inovação com métricas para chama-la e alterei lógica dos discos" />
   </component>
 </project>

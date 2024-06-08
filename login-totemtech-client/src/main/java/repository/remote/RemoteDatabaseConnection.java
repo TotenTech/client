@@ -10,9 +10,9 @@ public class RemoteDatabaseConnection {
         BasicDataSource dataSource = new BasicDataSource();
 
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://localhost:1433;database=totemTech;encrypt=false;trustServerCertificate=true;");
+        dataSource.setUrl("jdbc:sqlserver://52.203.195.192:1433;database=totemTech;encrypt=false;trustServerCertificate=true;");
         dataSource.setUsername("totemMaster");
-        dataSource.setPassword("12345");
+        dataSource.setPassword("ComplexPassword@2024");
 
         this.conexaoDoBanco = new JdbcTemplate(dataSource);
     }
