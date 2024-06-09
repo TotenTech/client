@@ -3,7 +3,7 @@ package repository.local;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class LocalDatabaseConnection {
+public class  LocalDatabaseConnection {
     private JdbcTemplate conexaoDoBanco;
 
     public LocalDatabaseConnection() {

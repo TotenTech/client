@@ -7,10 +7,13 @@ import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
 import model.*;
 import model.register.Registro;
+import repository.local.LocalDatabaseConnection;
 import service.ComponentTypes;
 import service.Convertions;
 import shell.PowerShell;
 import shell.TerminalLinux;
+import slack.EnvioAlertas;
+import slack.Slack;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -36,9 +39,12 @@ public class App {
     static List<Boolean> cpuError = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
-
         verificarSo();
         inicio();
+
+        Slack slack = new Slack();
+        LocalDatabaseConnection conexaoDoBanco = new LocalDatabaseConnection();
+        EnvioAlertas envioAlertas = new EnvioAlertas(conexaoDoBanco, slack);
 
         if (logged != null) {
             try {
@@ -60,6 +66,7 @@ public class App {
 
             while (true) {
                 inserts();
+                envioAlertas.verificarDados();
                 Thread.sleep(120000);
             }
         }
@@ -172,7 +179,6 @@ public class App {
         cpuRegistro.setValor((CpuController.getUsingPercentage()).toString());
         System.out.println("Cpu sendo utilizada em porcentagem: " + cpuRegistro.getValor());
         RegistroController.insertRegistro(cpuRegistro);
-
 
         Registro redeRegistro = new Registro();
         redeRegistro.setComponente(rede.getIdComponente());
@@ -336,30 +342,30 @@ public class App {
         System.out.println(statusMemoria);
         System.out.println("CPU");
         System.out.println(statusCpu);
-        System.out.println("Discos");
+        System.out.println("Armazenamento");
         System.out.println(statusDisco);
         System.out.println("Rede");
         System.out.println(statusRede);
-            if (restartTotem) {
-                InterrupcoesDAO.insertInterrupcao(motivo, logged.getIdTotem());
-                new Thread(() -> {
-                    try {
-                        for (int i = 5; i > 0; i--) {
-                            System.out.println("O totem será reiniciado em: " + i + " segundos");
-                            Thread.sleep(1000);
-                            if (i == 1) {
-                                restart();
-                            }
+        if (restartTotem) {
+            InterrupcoesDAO.insertInterrupcao(motivo, logged.getIdTotem());
+            new Thread(() -> {
+                try {
+                    for (int i = 5; i > 0; i--) {
+                        System.out.println("O totem será reiniciado em: " + i + " segundos");
+                        Thread.sleep(1000);
+                        if (i == 1) {
+                            restart();
                         }
-                    } catch (Exception e) {
-                        Thread.currentThread().interrupt();
                     }
-                }).start();
+                } catch (Exception e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
 
-            } else {
-                System.out.println("Monitoramento finalizado em " + horario + " os componentes passarão por testes de monitoramento novamente em aproximadamente 2 minutos");
-                System.out.println();
-            }
+        } else {
+            System.out.println("Monitoramento finalizado em " + horario + " os componentes passarão por testes de monitoramento novamente em aproximadamente 2 minutos");
+            System.out.println();
+        }
     }
 
     public static void restart() {
@@ -376,4 +382,5 @@ public class App {
         }
     }
 }
+
 
