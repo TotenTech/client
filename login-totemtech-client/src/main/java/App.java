@@ -7,10 +7,13 @@ import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
 import model.*;
 import model.register.Registro;
+import repository.local.LocalDatabaseConnection;
 import service.ComponentTypes;
 import service.Convertions;
 import shell.PowerShell;
 import shell.TerminalLinux;
+import slack.EnvioAlertas;
+import slack.Slack;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -40,6 +43,10 @@ public class App {
         verificarSo();
         inicio();
 
+        Slack slack = new Slack();
+        LocalDatabaseConnection conexaoDoBanco = new LocalDatabaseConnection();
+        EnvioAlertas envioAlertas = new EnvioAlertas(conexaoDoBanco, slack);
+
         if (logged != null) {
             try {
                 cpu = CpuController.getCpu(logged.getIdTotem(), CPU);
@@ -60,6 +67,7 @@ public class App {
 
             while (true) {
                 inserts();
+                envioAlertas.verificarDados();
                 Thread.sleep(120000);
             }
         }
