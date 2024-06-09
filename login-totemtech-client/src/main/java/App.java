@@ -336,7 +336,7 @@ public class App {
         System.out.println(statusMemoria);
         System.out.println("CPU");
         System.out.println(statusCpu);
-        System.out.println("Discos");
+        System.out.println("Armazenamento");
         System.out.println(statusDisco);
         System.out.println("Rede");
         System.out.println(statusRede);

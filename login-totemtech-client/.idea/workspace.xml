@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="17c6d107-b2bc-46b5-be94-6d862e5c9866" name="Changes" comment="Apliquei inovação com métricas para chama-la e alterei lógica dos discos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/remote/RemoteDatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/repository/remote/RemoteDatabaseConnection.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
