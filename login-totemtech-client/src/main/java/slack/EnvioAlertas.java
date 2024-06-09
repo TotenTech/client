@@ -59,7 +59,7 @@ public class EnvioAlertas {
                                             
                                     :information_source: | Verifique se o totem voltou a funcionar corretamente e monitore para possíveis problemas recorrentes.""".formatted(idTotemInterrupcao, nomeTotem, motivoInterrupcao, horarioInterrupcao));
 
-                            slack.sendSlackMessage("https://hooks.slack.com/services/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", jsonAlertaInterrupcao);
+                            slack.sendSlackMessage("https://hooks.slack.com/services/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", jsonAlertaInterrupcao);
                         }
                     }
                     ultimoAlertaInterrupcao = horarioInterrupcao;
@@ -99,7 +99,7 @@ public class EnvioAlertas {
                                 
                                 :warning: | CPU está sendo utilizada com eficiência, mas pode haver lentidão em momentos de pico.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             } else if (registro.getValor() > 90) {
                                 if (cpuError.isEmpty()){
                                     cpuError.add(true);
@@ -115,7 +115,7 @@ public class EnvioAlertas {
                                 
                                 :rotating_light: | Sobrecarga da CPU pode resultar em lentidão, travamentos e instabilidades do sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
                                 } else if (!cpuError.get(cpuError.size() - 1)) {
                                     cpuError.add(true);
 
@@ -131,7 +131,7 @@ public class EnvioAlertas {
                                 
                                 :rotating_light: | Sobrecarga da CPU pode resultar em lentidão, travamentos e instabilidades do sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
                                 }
                             }
                             break;
@@ -148,7 +148,7 @@ public class EnvioAlertas {
                                 
                                 :warning: | Nível de alerta que exige monitoramento para evitar que a utilização do disco exceda a capacidade.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             } else if (registro.getValor() > 90) {
                                 json.put("text", """
                                 *Crítico: utilização excessiva do disco!*
@@ -161,7 +161,7 @@ public class EnvioAlertas {
                                 
                                 :rotating_light: | Utilização excessiva do disco pode levar a lentidão, travamentos e falhas no sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             }
                             break;
                         case "Memória":
@@ -180,7 +180,7 @@ public class EnvioAlertas {
                                 
                                 :warning: | Nível aceitável de memória, mas exige monitoramento para evitar sobrecarga da memória.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             } else if (registro.getValor() > 89) {
                                 if (memoriaError.isEmpty()){
                                     memoriaError.add(true);
@@ -196,7 +196,7 @@ public class EnvioAlertas {
                                     
                                     :rotating_light: | Sobrecarga da memória pode levar a lentidão, travamentos, falhas no sistema e até mesmo perda de dados.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
                                 } else if (!memoriaError.get(memoriaError.size() - 1)){
                                     memoriaError.add(true);
                                     json.put("text", """
@@ -211,7 +211,7 @@ public class EnvioAlertas {
                                     
                                     :rotating_light: | Sobrecarga da memória pode levar a lentidão, travamentos, falhas no sistema e até mesmo perda de dados.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                    sendSlackMessage("https://hooks.slack.com/services/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", json);
                                 }
                             }
                             break;
@@ -222,13 +222,13 @@ public class EnvioAlertas {
                                 
                                 *Detalhes:*
                                 - Totem: `%d (%s)`
-                                - Valor (rede): `%.f MB/s`
+                                - Valor (rede): `%.2f MB/s`
                                 - Data/hora: `%s`
                                 
                                 
                                 :warning: | O sistema funcionará sem problemas, porém, pode apresentar problemas em horário de pico.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             }
                             else if (registro.getValor() < 5){
                                 json.put("text", """
@@ -242,22 +242,21 @@ public class EnvioAlertas {
                                 
                                 :rotating_light: | Totem pode indicar lentidão, travamento e instabilidade do sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getValor(), registro.getHorario()));
 
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+                                sendSlackMessage("https://hooks.slack.com/services/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", json);
                             }
                             break;
-                        default:
-                            if (registro.getValor() == 0){
-                                json.put("text", """
-                                Alerta: Totem possívelmente sem rede!!
-                                Detalhes:
-                                - Totem: %d (%s)
-                                - Última data/hora com rede: %s
-                                Totem pode indicar lentidão, travamento e instabilidade do sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getHorario()));
-
-                                sendSlackMessage("https://hooks.slack.com/services/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", json);
-                            }
-                            break;
-
+//                        default:
+//                            if (registro.getValor() == 0){
+//                                json.put("text", """
+//                                Alerta: Totem possívelmente sem rede!!
+//                                Detalhes:
+//                                - Totem: %d (%s)
+//                                - Última data/hora com rede: %s
+//                                Totem pode indicar lentidão, travamento e instabilidade do sistema.""".formatted(registro.getIdTotem(), registro.getNomeTotem(), registro.getHorario()));
+//
+//                                sendSlackMessage("https://hooks.slack.com/services/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", json);
+//                            }
+//                            break;
                     }
 
                     ultimoAlertaComponente = registro.getHorario();
