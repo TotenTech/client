@@ -1,3 +1,4 @@
+slack\RegistroComponentes.class
 dao\IRegisterDAO.class
 repository\remote\RemoteDatabaseConnection.class
 App.class
@@ -13,6 +14,7 @@ model\Cpu.class
 App$1.class
 controller\MemoriaController.class
 model\Rede.class
+slack\EnvioAlertas.class
 model\Disco.class
 model\Memoria.class
 model\Especificacoes.class
@@ -24,6 +26,7 @@ shell\PowerShell.class
 dao\InterrupcoesDAO.class
 dao\ComponentDAOImpl.class
 service\Specifications.class
+slack\Slack.class
 controller\RegistroController.class
 model\Totem.class
 repository\local\LocalDatabaseConnection.class
